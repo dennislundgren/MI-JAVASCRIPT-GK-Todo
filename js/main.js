@@ -9,12 +9,13 @@ Skapa en Todo-lista:
     Generera all HTML i javascriptet.
 
 */
+let container = document.createElement("div");
+container.setAttribute("class", "container");
+document.body.appendChild(container);
 
-let createInput = document.createElement("input");
-createInput.setAttribute("autofocus", null);
-document.body.appendChild(createInput);
+let input = document.createElement("input");
+input.setAttribute("autofocus", null);
+document.body.appendChild(input);
 
 let inp = document.querySelector("input");
 let inpStyle = window.getComputedStyle(inp);
-
-console.log(inpStyle);
