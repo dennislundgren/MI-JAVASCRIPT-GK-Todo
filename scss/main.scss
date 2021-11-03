@@ -12,9 +12,16 @@ body {
   .container {
     position: relative;
     width: clamp(280px, 90vw, 600px);
-    background-color: azure;
+    display: flex;
     input {
-      width: 100%;
+      flex-grow: 1;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid black;
+    }
+    button {
+      position: absolute;
+      right: 15px;
     }
   }
 }

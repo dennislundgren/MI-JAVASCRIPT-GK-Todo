@@ -1,16 +1,47 @@
 let container = document.createElement("div");
 let input = document.createElement("input");
-container.setAttribute("class", "container");
-input.setAttribute("placeholder", "What to do...");
+let button = document.createElement("button");
+container.classList.add("container", "add");
+input.setAttribute("placeholder", "To do...");
+button.setAttribute("onclick", "add()");
+button.innerHTML = "Press me";
 container.appendChild(input);
+container.appendChild(button);
 
-let containers = [container];
 document.body.appendChild(container);
 
-for (let i = 1; i < 5; i++) {
+let containers = [container];
+let len = containers.length;
+
+function add() {
+  let value = input.value;
   containers.push(container.cloneNode(true));
-  let n = containers[i].querySelector("input");
-  n.setAttribute("value", "Hej");
+  document.body.appendChild(containers[len]);
+  let b = containers[len].querySelector("button");
+  let n = containers[len].querySelector("input");
+  b.setAttribute("onclick", "remove(this)");
+  b.innerHTML = "Remove";
   n.removeAttribute("placeholder");
-  document.body.appendChild(containers[i]);
+  n.setAttribute("value", value);
+  n.style.border = "none";
+  containers[len].classList.remove("add");
+  containers[len].classList.add("todo");
+  len++;
+  input.value = null;
 }
+
+function remove(e) {
+  e.parentNode.remove();
+  len--;
+}
+
+// for (let i = 1; i < 5; i++) {
+//   containers.push(container.cloneNode(true));
+//   containers[i].classList.add("todo");
+//   let n = containers[i].querySelector("input");
+//   let b = containers[i].querySelector("button");
+//   n.setAttribute("value", "Hej");
+//   n.removeAttribute("placeholder");
+//   b.setAttribute("class", "done");
+//   document.body.appendChild(containers[i]);
+// }
