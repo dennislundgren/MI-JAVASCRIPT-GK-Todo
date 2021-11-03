@@ -1,21 +1,16 @@
-/*
-
-Skapa en Todo-lista:
-    Använd input-fält för att lagra todo-värden och presentera dessa 
-    med hjälp utav p-element.
-
-    Spara värdena i en lista av objekt.
-
-    Generera all HTML i javascriptet.
-
-*/
 let container = document.createElement("div");
+let input = document.createElement("input");
 container.setAttribute("class", "container");
+input.setAttribute("placeholder", "What to do...");
+container.appendChild(input);
+
+let containers = [container];
 document.body.appendChild(container);
 
-let input = document.createElement("input");
-input.setAttribute("autofocus", null);
-document.body.appendChild(input);
-
-let inp = document.querySelector("input");
-let inpStyle = window.getComputedStyle(inp);
+for (let i = 1; i < 5; i++) {
+  containers.push(container.cloneNode(true));
+  let n = containers[i].querySelector("input");
+  n.setAttribute("value", "Hej");
+  n.removeAttribute("placeholder");
+  document.body.appendChild(containers[i]);
+}

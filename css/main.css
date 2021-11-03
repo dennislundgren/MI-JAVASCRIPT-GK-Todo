@@ -3,7 +3,18 @@
   margin: 0 auto;
 }
 
-.container {
-  width: clamp(270px, 50vw, 600px);
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px 0;
+  row-gap: 20px;
+}
+body .container {
+  position: relative;
+  width: clamp(280px, 90vw, 600px);
   background-color: azure;
+}
+body .container input {
+  width: 100%;
 }

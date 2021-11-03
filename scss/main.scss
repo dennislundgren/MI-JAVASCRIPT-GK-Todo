@@ -3,7 +3,18 @@
   margin: 0 auto;
 }
 
-.container {
-  width: clamp(270px, 50vw, 600px);
-  background-color: azure;
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px 0;
+  row-gap: 20px;
+  .container {
+    position: relative;
+    width: clamp(280px, 90vw, 600px);
+    background-color: azure;
+    input {
+      width: 100%;
+    }
+  }
 }
