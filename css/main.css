@@ -1,6 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 * {
   box-sizing: border-box;
   margin: 0 auto;
+  font-family: "Montserrat", serif;
 }
 
 body {
@@ -13,15 +15,34 @@ body {
 body .container {
   position: relative;
   width: clamp(280px, 90vw, 600px);
+  padding: 10px 5px;
   display: flex;
+}
+body .container.add {
+  border-bottom: 1px solid black;
 }
 body .container input {
   flex-grow: 1;
   border: none;
-  border-radius: 0;
-  border-bottom: 1px solid black;
+}
+body .container input:focus {
+  outline: none;
 }
 body .container button {
-  position: absolute;
-  right: 15px;
+  position: relative;
+  background: none;
+  border: none;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+body .container button:hover {
+  outline: none;
+}
+body .container button:hover i {
+  transform: scale(2.5);
+}
+body .container button i {
+  transform: scale(1.5);
+  transition: all 0.1s ease-in-out;
 }
