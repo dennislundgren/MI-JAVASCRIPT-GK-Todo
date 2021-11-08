@@ -3,7 +3,6 @@ class Elements {
     this.container = document.createElement("div");
     this.input = document.createElement("input");
     this.button = document.createElement("button");
-    this.status = ["todo", "done"];
   }
 }
 
@@ -51,6 +50,8 @@ for (let i = 0; i < localStorage.length; i++) {
   idArray.push(localStorage.key(i));
 }
 
+console.log(idArray);
+
 idArray.sort();
 
 for (let i = 0; i < idArray.length; i++) {
@@ -58,9 +59,9 @@ for (let i = 0; i < idArray.length; i++) {
   let todoValue = localStorage.getItem(todoId);
   todoValue = JSON.parse(todoValue);
   todoInput.setAttribute("value", todoValue.value);
+  todoInput.setAttribute("onchange", "change(this)");
   let todoClone = todoContainer.cloneNode(true);
   let todoCloneButton = todoClone.querySelector("button");
-  console.log(todoCloneButton);
   if (todoValue.status == "done") {
     todoCloneButton.innerHTML = "<i class='fas fa-plus'></i>";
     todoCloneButton.setAttribute("onclick", "returnTodo(this)");
@@ -72,7 +73,7 @@ for (let i = 0; i < idArray.length; i++) {
   document.body.appendChild(todoClone);
 }
 
-window.addEventListener("keyup", function (e) {
+addInput.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     add();
@@ -90,14 +91,18 @@ function add() {
   let todoValue = localStorage.getItem(todoId);
   todoValue = JSON.parse(todoValue);
   todoInput.setAttribute("value", todoValue.value);
+  todoInput.setAttribute("onchange", "change(this)");
   let todoClone = todoContainer.cloneNode(true);
   todoClone.setAttribute("id", todoId);
   document.body.appendChild(todoClone);
 }
 
-function remove(e) {
-  localStorage.removeItem(e.parentNode.id);
-  e.parentNode.remove();
+function change(e) {
+  let changeValue = localStorage.getItem(e.parentNode.id);
+  changeValue = JSON.parse(changeValue);
+  changeValue.value = e.value;
+  changeValue = JSON.stringify(changeValue);
+  localStorage.setItem(e.parentNode.id, changeValue);
 }
 
 function done(e) {
@@ -123,4 +128,9 @@ function returnTodo(e) {
   localStorage.setItem(e.parentNode.id, changeStatus);
   e.innerHTML = "<i class='fas fa-check'></i>";
   e.setAttribute("onclick", "done(this)");
+}
+
+function remove(e) {
+  localStorage.removeItem(e.parentNode.id);
+  e.parentNode.remove();
 }
