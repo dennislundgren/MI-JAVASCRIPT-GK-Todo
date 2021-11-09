@@ -9,15 +9,49 @@
 body {
   display: grid;
   justify-content: center;
-  // align-items: center;
   flex-direction: column;
   padding: 50px 0;
   row-gap: 20px;
+  .myList {
+    display: grid;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px 0 50px;
+    row-gap: 20px;
+  }
+  .volume {
+    transform: rotate(135deg);
+    position: absolute;
+    font-size: clamp(0.8em, 3vw, 2em);
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    &:hover {
+      transform: scale(1.25) rotate(135deg);
+    }
+  }
   .container {
     position: relative;
     width: clamp(280px, 90vw, 600px);
     padding: 10px 5px;
     display: flex;
+    .chevron {
+      position: absolute;
+      left: -15px;
+      font-size: clamp(0.75em, 2vw, 0.9em);
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+    .chevron:first-child {
+      top: 7px;
+    }
+    .chevron:nth-child(2) {
+      bottom: 7px;
+    }
     &.add {
       border-bottom: 1px solid black;
     }
@@ -55,6 +89,12 @@ body {
       input {
         color: #aaa;
       }
+    }
+    .date {
+      position: absolute;
+      top: 0;
+      font-size: 0.5em;
+      color: rgba(0, 0, 0, 0.5);
     }
   }
 }
