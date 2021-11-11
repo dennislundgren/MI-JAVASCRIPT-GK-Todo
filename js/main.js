@@ -1,40 +1,10 @@
 class Todo {
   constructor(value, status) {
-    this.id = uniqueId;
+    this.id = Date.now();
     this.value = value;
     this.status = status;
+    this.important = "";
   }
-}
-
-let volumeOnOff = document.createElement("div");
-let volume = localStorage.getItem("volume");
-volume = JSON.parse(volume);
-volumeOnOff.classList.add("volume");
-
-if (volume || volume == null) {
-  volume = true;
-  volumeOnOff.setAttribute("onclick", "mute()");
-  volumeOnOff.innerHTML = "<i class='fas fa-volume-up'></i>";
-} else if (!volume) {
-  volume = false;
-  volumeOnOff.innerHTML = "<i class='fas fa-volume-mute'></i>";
-  volumeOnOff.setAttribute("onclick", "unMute()");
-}
-
-document.body.appendChild(volumeOnOff);
-
-function mute() {
-  volume = false;
-  volumeOnOff.innerHTML = "<i class='fas fa-volume-mute'></i>";
-  volumeOnOff.setAttribute("onclick", "unMute()");
-  localStorage.setItem("volume", false);
-}
-
-function unMute() {
-  volume = true;
-  volumeOnOff.innerHTML = "<i class='fas fa-volume-up'></i>";
-  volumeOnOff.setAttribute("onclick", "mute()");
-  localStorage.setItem("volume", true);
 }
 
 let addContainer = document.createElement("div");
@@ -49,23 +19,16 @@ addButton.setAttribute("onclick", "add()");
 addButton.innerHTML = "<i class='fas fa-plus'></i>";
 addContainer.appendChild(addInput);
 addContainer.appendChild(addButton);
-
 document.body.appendChild(addContainer);
 
-let uniqueId;
-setInterval(() => {
-  uniqueId = Date.now();
-}, 1);
-
-let myList = document.createElement("div");
+let myList = document.createElement("section");
 let todoContainer = document.createElement("div");
 let todoInput = document.createElement("input");
 let removeTodoButton = document.createElement("button");
 let doneTodoButton = document.createElement("button");
-// let pDate = document.createElement("div");
 let chevronUp = document.createElement("div");
 let chevronDown = document.createElement("div");
-// pDate.classList.add("date");
+let importantButton = document.createElement("button");
 
 myList.classList.add("myList");
 todoContainer.classList.add("container");
@@ -81,15 +44,16 @@ chevronUp.classList.add("chevron");
 chevronDown.classList.add("chevron");
 chevronUp.setAttribute("onclick", "moveUp(this)");
 chevronDown.setAttribute("onclick", "moveDown(this)");
+importantButton.setAttribute("onclick", "important(this)");
+importantButton.innerHTML = "<i class='fas fa-exclamation'></i>";
 todoContainer.appendChild(chevronUp);
 todoContainer.appendChild(chevronDown);
-// todoContainer.appendChild(pDate);
 todoContainer.appendChild(todoInput);
 todoContainer.appendChild(doneTodoButton);
 todoContainer.appendChild(removeTodoButton);
+todoContainer.appendChild(importantButton);
 
 let returnAddButton = document.createElement("button");
-
 returnAddButton.innerHTML = "<i class='fas fa-plus'></i>";
 
 let todoList = [];
@@ -102,6 +66,13 @@ if (localStorageArray != null) {
   }
   displayList();
 }
+
+addInput.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    add();
+  }
+});
 
 function displayList() {
   myList.innerHTML = "";
@@ -126,6 +97,10 @@ function displayList() {
     }
     todoClone.setAttribute("id", todoId);
     todoClone.classList.add(todoList[i].status);
+    if (todoList[i].important == "" || todoList[i].status == "done") {
+    } else {
+      todoClone.classList.add(todoList[i].important);
+    }
     myList.appendChild(todoClone);
   }
 }
@@ -136,23 +111,11 @@ function eraseList() {
   }
 }
 
-addInput.addEventListener("keyup", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    add();
-  }
-});
-
 function update() {
   localStorage.setItem("Todo_List", JSON.stringify(todoList));
 }
 
 function add() {
-  let audio = new Audio("./audio/cool.mp3");
-  if (volume) {
-    audio.play();
-  } else {
-  }
   addValue = new Todo(addInput.value, "todo");
   todoList.push(addValue);
   addInput.value = "";
@@ -161,11 +124,6 @@ function add() {
 }
 
 function change(e) {
-  let audio = new Audio("./audio/blow.mp3");
-  if (volume) {
-    audio.play();
-  } else {
-  }
   let id = e.parentNode.id;
   for (let i = 0; i < todoList.length; i++) {
     if (id == todoList[i].id) {
@@ -177,17 +135,14 @@ function change(e) {
 }
 
 function done(e) {
-  let audio = new Audio("./audio/nice.mp3");
-  if (volume) {
-    audio.play();
-  } else {
-  }
   let id = e.parentNode.id;
   for (let i = 0; i < todoList.length; i++) {
     if (id == todoList[i].id) {
       todoList[i].status = "done";
+      todoList[i].important = "";
       e.parentNode.classList.add("done");
       e.parentNode.classList.remove("todo");
+      e.parentNode.classList.remove("important");
       e.innerHTML = "<i class='fas fa-plus'></i>";
       e.setAttribute("onclick", "returnTodo(this)");
     }
@@ -197,11 +152,6 @@ function done(e) {
 }
 
 function returnTodo(e) {
-  let audio = new Audio("./audio/shh.mp3");
-  if (volume) {
-    audio.play();
-  } else {
-  }
   let id = e.parentNode.id;
   for (let i = 0; i < todoList.length; i++) {
     if (id == todoList[i].id) {
@@ -217,11 +167,6 @@ function returnTodo(e) {
 }
 
 function remove(e) {
-  let audio = new Audio("./audio/snap.mp3");
-  if (volume) {
-    audio.play();
-  } else {
-  }
   let id = parseInt(e.parentNode.id);
   for (let i = 0; i < todoList.length; i++) {
     if (id === todoList[i].id) {
@@ -229,7 +174,6 @@ function remove(e) {
     }
   }
   update();
-  // e.parentNode.remove();
   displayList();
 }
 
@@ -264,6 +208,24 @@ function moveDown(e) {
       break;
     }
   }
+  update();
+  displayList();
+}
+
+function important(e) {
+  let id = e.parentNode.id;
+  for (let i = 0; i < todoList.length; i++) {
+    if (id == todoList[i].id && todoList[i].status != "done") {
+      if (todoList[i].important == "") {
+        todoList[i].important = "important";
+        e.parentNode.classList.add("important");
+      } else if (todoList[i].important == "important") {
+        todoList[i].important = "";
+        e.parentNode.classList.remove("important");
+      }
+    }
+  }
+  console.log(e.parentNode.classList);
   update();
   displayList();
 }

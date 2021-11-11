@@ -33,7 +33,7 @@ body .volume:hover {
 }
 body .container {
   position: relative;
-  width: clamp(280px, 90vw, 600px);
+  width: clamp(260px, 90vw, 600px);
   padding: 10px 5px;
   display: flex;
 }
@@ -90,9 +90,20 @@ body .container.done {
 body .container.done input {
   color: #aaa;
 }
+body .container.done button:nth-child(6) {
+  display: none;
+}
+body .container.important {
+  order: -1;
+}
+body .container.important button .fa-exclamation {
+  color: #ff593c;
+}
 body .container .date {
   position: absolute;
   top: 0;
+  right: 0;
   font-size: 0.5em;
   color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
 }

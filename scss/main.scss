@@ -33,7 +33,7 @@ body {
   }
   .container {
     position: relative;
-    width: clamp(280px, 90vw, 600px);
+    width: clamp(260px, 90vw, 600px);
     padding: 10px 5px;
     display: flex;
     .chevron {
@@ -89,12 +89,23 @@ body {
       input {
         color: #aaa;
       }
+      button:nth-child(6) {
+        display: none;
+      }
+    }
+    &.important {
+      order: -1;
+      button .fa-exclamation {
+        color: rgb(255, 89, 60);
+      }
     }
     .date {
       position: absolute;
       top: 0;
+      right: 0;
       font-size: 0.5em;
       color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
     }
   }
 }
